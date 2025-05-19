@@ -26,8 +26,10 @@ body {
     justify-content: space-between;
     align-items: center;
     height: 5rem;
-    border-bottom: 1px solid #ffffff5e;
 }
+
+
+
 
 .cabecalho__acoes {
     display: flex;
@@ -93,7 +95,7 @@ body {
     top: 0;
     right: calc(-2.5rem - 1rem);
 
-    background-image: url(../img/icone-chatbot.svg);
+    
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -126,7 +128,7 @@ body {
     gap: 1.5rem;
     justify-content: stretch;
     align-items: center;
-    border-top: 1px solid #ffffff5e;
+    
 }
 
 .entrada__container {
