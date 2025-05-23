@@ -19,17 +19,36 @@ app.secret_key = 'alura'
 assistente = criar_assistente()
 thread = criar_thread()
 
+
+            
+
 def bot(prompt):
     maximo_tentativas = 1
     repeticao = 0
     while True:
         try:
+            personalidade = personas[selecionar_persona(prompt)]
+            # Acessa a camada de mensagens da thread e cria uma nova mensagem que vai ser interpretada pelo assistente para chegar a resposta
             cliente.beta.threads.messages.create(
                     thread_id=thread.id,
                     role = "user",
-                    content =  prompt
+                    content =  f"""
+                    Assuma, de agora em diante, a personalidade abaixo. 
+                    Ignore as personalidades anteriores.
+
+                    # Persona
+                    {personalidade}
+                    """,
+                   
                 )
-                
+            
+            cliente.beta.threads.messages.create(
+                    thread_id=thread.id,
+                    role = "user",
+                    content =  prompt,
+                    
+                )
+            # Execução da thread. Passando o parâmetro thread que vai
             run = cliente.beta.threads.runs.create(
                 thread_id=thread.id,
                 assistant_id=assistente.id
@@ -51,7 +70,8 @@ def bot(prompt):
                         return "Erro no GPT: %s" % erro
                 print('Erro de comunicação com OpenAI:', erro)
                 sleep(1)
-            
+
+
 
 
 @app.route("/chat", methods=["POST"])
